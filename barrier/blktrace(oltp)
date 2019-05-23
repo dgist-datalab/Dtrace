@@ -1,0 +1,25 @@
+sysbench --test=oltp --oltp-table-size=1000000 --num-threads=8 --max-requests=10000000000 --max-time=0 --mysql-host=127.0.0.1 --mysql-user=sysbench --mysql-password=sysbench --mysql-db=sysbench --mysql-table-engine=innodb --mysql-create-options=  --mysql-socket=/tmp/mysql.sock --mysql-port=3306 --oltp-test-mode=complex --oltp-read-only=off --db-driver=mysql --db-ps-mode=disable run
+
+
+
+sysbench --test=oltp --oltp-table-size=1000000 --num-threads=8 --max-requests=10000000000 --max-time=0 --mysql-host=127.0.0.1 --mysql-user=sysbench --mysql-password=sysbench --mysql-db=sysbench --mysql-table-engine=innodb --mysql-create-options= --mysql-socket=/tmp/mysql.sock --mysql-port=3306 --oltp-test-mode=complex --oltp-read-only=off --db-driver=mysql --db-ps-mode=disable prepare
+
+
+blktrace -d /dev/sda -o - | blkparse -i - -o output.txt // total output
+blktrace -d /dev/sda -o - | blkparse -f "%5T.%9t, %p, %C, %a, %S\n -i - -o (filename)
+blkparse /dev/sda -f "%5T.%9t, %p, %C, %a, %S\n"  -a write -o output.txt
+
+blktrace -d /dev/sdb -o - | blkparse -f "%3a, %3C, %S, %3n\n" -i -
+
+
+
+blktrace -d /dev/sda1 -o - | blkparse -f "%a %d %S %n\n" -i - -o 
+blktrace -d /dev/sda2 -o - | blkparse -f "%a %d %S %n\n" -i - -o 
+
+
+
+//Blktrace command for barrier
+blktrace -d /dev/sdb -o - | blkparse -f "%T.%9t %4c %4a %4n %5d %5C\n" -i - -o test.out
+
+
+
